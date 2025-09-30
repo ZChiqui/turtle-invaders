@@ -72,6 +72,7 @@ class Game:
         self.difficulty = None
         self.diff_mult = 1.0
         self.tick = 0
+        self.boss_fire_period = 24  # slower boss fire cadence
 
         # Input
         self.bind_keys()
@@ -457,8 +458,8 @@ class Game:
                 self.state = "gameover"
                 self.show_game_over("Boss collided with player")
                 return
-        # More aggressive firing: each boss fires frequently in pairs
-        if self.tick % 10 == 0:
+        # Boss firing: slower cadence, fires in pairs
+        if self.tick % self.boss_fire_period == 0:
             for boss in self.bosses:
                 y = boss.ycor() - 28
                 x = boss.xcor()
